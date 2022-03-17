@@ -1,0 +1,127 @@
+body {
+  background: #333;
+  color: #fff;
+}
+
+.navbar {
+  border-bottom: rgb(0, 164, 214) 3px solid; /* or 008ed6 for hex color */
+  opacity: 0.8;
+}
+/* Dropdown menu background color*/
+.navbar-nav > li > .dropdown-menu {     background-color: #313131;  }
+/* Dropdown menu font color*/ 
+ .navbar-nav > li > .dropdown-menu a{   color: rgb(181, 235, 252);  }
+ .navbar-nav > li > .dropdown-menu a:link,
+ /* .navbar-nav > li > .dropdown-menu a:hover { background-color: #25d115;} */
+ 
+.bc-divider .breadcrumb-item+.breadcrumb-item::before {
+  /* content: "/";
+  vertical-align:center; */
+  color: cyan;
+  /* font-size: 1rem; */
+  /* line-height:18px; */
+}
+
+h1 {
+  color: rgb(0, 164, 214);
+}
+
+h2 {
+  color: rgb(0, 164, 214);
+}
+
+a:link {
+  color: rgb(181, 235, 252);
+}
+
+a:visited {
+  color: rgb(88, 214, 252);
+}
+
+a:hover {
+  color: rgb(0, 214, 168);
+}
+
+a:active {
+  color: rgb(0, 164, 214);
+}
+
+.dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 700px;
+  background: rgba(0,0,0,0.7);
+}
+
+.content-inner {
+  padding-top: 80px;
+}
+
+#naughty-section {
+  background: url(../img/build-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+
+#home-section {
+  background: url(../img/build-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+
+#project-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+
+#buildarea-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+#selectionitem-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+#selectionchoice-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+#invoice-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+#payment-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}
+#report-section {
+  background: url(../img/plans-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 700px;
+}

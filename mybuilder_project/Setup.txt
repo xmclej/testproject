@@ -1,0 +1,140 @@
+Project structure based upon Two Scoops of Django 3
+
+## Custom scripts to aid in creating environment
+  - create_environ.bat
+  - create_project.bat
+  - makeapp.bat
+  - run.bat
+
+
+## Main Project Structure Setup ##
+  - Run create_environ.bat
+  - Run create_project.bat with "project"
+  - Rename repository root to [projectname]_project e.g. "mybuilder_project"
+  - Create following folders under "mybuilder_project" (repository root), 
+    - config, docs
+  - Create a settings folder under config
+  - Create the following files under "mybuilder_project" (repository root), 
+    - README.md, .gitignore
+  - Copy a blank __init__.py to 
+    - config folder, settings folder
+  - Move all other files under "project" (project root) 
+    - to config folder leaving settings.py and __init__.py
+  - Move settings.py to new settings folder under config folder 
+    - rename settings.py to base.by
+    - create dev.py and prod.py under settings folder
+  - Create the following folders under "project" (project root), 
+    - media, static, templates
+  - From "mybuilder_project" (repository root) run "pip freeze > requirements.txt"
+  - Remember to change references in base.py settings 
+    - from "mybuilder_project" to config where appropriate e.g.
+      - ROOT_URLCONF = 'config.urls'
+      - WSGI_APPLICATION = 'config.wsgi.application'
+  - run.bat   # This calls runserver
+    - to test all settings are correct
+  -- Add 'django.contrib.humanize', to INSTALLED_APPS > base.py settings
+  Use makeapp.bat from repository root
+    - makebat.bat [appname]
+
+## Setup for apps to be in subfolder - "project/apps"
+  - Add to manage.py under DJANGO_SETTINGS_MODULE
+    - from os.path import abspath, dirname, join
+    - PROJECT_ROOT = abspath(dirname(__file__))
+    - sys.path.append(join(PROJECT_ROOT, "project/apps"))
+
+## Add profiles app for Custom User model and profiles if needed
+  - From repository root
+    - makeapp.bat profiles
+    This creates app under mybuilder (project root)
+    - under models.py 
+      - Extend AbstractUser to allow for custom user fields
+    - Update admin.py so "user" appears in admin
+  - Add new app to settings
+    - INSTALLED_APPS 
+    - AUTH_USER_MODEL = 'profiles.User'
+  - Alter apps.py 
+    - name = 'mybuilder.profiles'
+
+## Add django-crispy-forms
+  - pipenv install django-crispy-forms
+  - add to 3rd party apps in settings
+
+## Add django-dotenv
+  - pipenv install django-dotenv
+  - add dotenv.read_dotenv() to manage.py
+  - create .env file
+
+## Setup STATIC
+  - no change to settings base.py
+  - Add to settings dev.py  
+    - STATICFILES_DIRS = [BASE_DIR / "project" / "static",]
+
+## Setup MEDIA
+  - Add to settings base.py
+    - MEDIA_URL = '/media/' 
+  - Add to settings dev.py  
+    - MEDIA_ROOT = BASE_DIR / "project" / "media"
+
+## Setup PostgreSQL database 
+- https://www.askpython.com/django/django-postgresql or
+- https://djangocentral.com/using-postgresql-with-django/
+  - Download and install postgreSQL db from https://www.postgresql.org/download/windows/
+  - From windows startmenu
+    - run SQL shell
+      - login with pwd from PostgreSQL install
+      - create database [solution name];
+      - \c [solution name];
+  - pipenv install psycopg2
+
+## MIGRATE
+  - python manage.py makemigrations
+  - python manage.py migrate
+
+## Add django-htmx - https://django-htmx.readthedocs.io/en/latest/installation.html
+  - pipenv install django-htmx
+  - add 'django_htmx' to INSTALLED_APPS
+  - add script entry from https://htmx.org/docs/#installing
+
+
+## Add django-allauth - https://django-allauth.readthedocs.io/en/latest/installation.html
+  - pipenv install django-allauth
+  - update settings and urls as per above instructions
+    - create new settings file allauth.py to keep things nice and tidy
+    - in base.py add following at bottom
+      - # Django-Allauth settings
+      from .allauth import *
+  - From https://github.com/pennersr/django-allauth clone to new folder 
+    - Then copy all the templates from account and socialaccount across to under the project root templates
+    - Alter base.html in account folder to only have {% extends "base.html" %}  
+    ## SOCIAL ACCOUNTS - Google
+    - To add Google go here https://console.cloud.google.com/
+      - create a project
+      - Via the 3-lines menu top left - goto APIs & Services
+      - goto credentials
+      - Create OAuth 2.0 Client ID
+      - add callback uri from https://django-allauth.readthedocs.io/en/latest/providers.html#google
+        - http://127.0.0.1:8000/accounts/google/login/callback/
+    - Goto django project admin and a record to the Social Application table with the info above  
+  - python manage.py migrate
+  - 
+
+## Add User form to update user fields after signup
+- profiles/models.py# as per custom user model above
+- profiles/forms.py
+- profiles/views.py
+- profiles/templates/profiles/edit_user.html
+- profiles/urls.py
+- config/urls.py
+
+## Setup base.html and css
+  - include the following under where the custom css goes
+      {% block styles %}
+        <!-- can use this to extend styles on a per page basis if wanted
+        In a template and these same block tags and include the relevant stylesheet link -->
+      {% endblock %}
+  - Then in subsequent pages you can include these tags and add page specific css
+    - Like for edit_user.html under project.apps.profiles include the following near the top
+      {% load static %}
+        {% block styles %}
+          <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+        {% endblock %}

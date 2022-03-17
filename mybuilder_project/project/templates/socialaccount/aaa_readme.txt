@@ -1,0 +1,1 @@
+This folders templates all relate to Django-Allauth package
